@@ -29,7 +29,7 @@ memory bilan suhbatni davom ettiradi.
 
 ## 🏗️ Architecture
 
-```text
+```
 ┌───────────────────────────────────────────────────────────────┐
 │                      Streamlit UI (dark)                      │
 │  Sidebar: upload / indexed docs / clear / settings            │
