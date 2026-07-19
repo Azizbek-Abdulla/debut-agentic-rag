@@ -30,11 +30,11 @@ memory bilan suhbatni davom ettiradi.
 ## 🏗️ Architecture
 
 ```
-┌─────────────────────────────────────────────────────────────┐
+┌───────────────────────────────────────────────────────────────┐
 │                      Streamlit UI (dark)                      │
-│  Sidebar: upload / indexed docs / clear / settings           │
-│  Main:    chat / sources / tool logs / chunks / memory       │
-└────────────────────────┬────────────────────────────────────┘
+│  Sidebar: upload / indexed docs / clear / settings            │
+│  Main:    chat / sources / tool logs / chunks / memory        │
+└────────────────────────┬──────────────────────────────────────┘
                          │  services.chat() / index_pdf()
 ┌────────────────────────▼────────────────────────────────────┐
 │                       FastAPI (app/main.py)                 │
@@ -44,17 +44,17 @@ memory bilan suhbatni davom ettiradi.
 ┌────────────────────────▼────────────────────────────────────┐
 │                 LangGraph Agent (agent/graph.py)            │
 │                                                             │
-│   START → classify → [retrieve] → agent ↔ tools → finalize   │
-└───────┬───────────────────────────────┬────────────────────┘
-        │ RAG pipeline                  │ Tools
-┌───────▼───────────────┐   ┌──────────▼──────────────────┐
-│  rag/                 │   │  tools/                     │
-│  chunker              │   │  calculator (safe AST eval) │
-│  embeddings (HF)      │   │  web_search (DDG/Tavily)    │
-│  retriever (BM25+FAISS)│  │  notion_tool (Notion API)   │
-│  hybrid (RRF fusion)  │   └─────────────────────────────┘
+│   START → classify → [retrieve] → agent ↔ tools → finalize  │
+└───────┬────────────────────────────────┬────────────────────┘
+        │ RAG pipeline                   │ Tools
+┌───────▼─────────────────┐   ┌──────────▼──────────────────┐
+│  rag/                   │   │  tools/                     │
+│  chunker                │   │  calculator (safe AST eval) │
+│  embeddings (HF)        │   │  web_search (DDG/Tavily)    │
+│  retriever (BM25+FAISS) │   │  notion_tool (Notion API)   │
+│  hybrid (RRF fusion)    │   └─────────────────────────────┘
 │  reranker (bge-reranker)│
-└───────────┬───────────┘
+└───────────┬─────────────┘
             │
 ┌───────────▼─────────────────────────────────────────────────┐
 │  database/    FAISS index (disk) + SQLite (docs + memory)   │
