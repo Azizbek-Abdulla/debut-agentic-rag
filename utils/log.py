@@ -71,9 +71,9 @@ def configure_logging(log_dir: str = "logs", level: str = "INFO") -> None:
     for noisy_logger in ("uvicorn", "uvicorn.error", "uvicorn.access", "htppx"):
         logging.getLogger(noisy_logger).handlers = [InterceptHandler()]
 
-    def get_logger(name: str):
-        """
-        Returns a logger bound with a 'name' field so log lines are traceable
-        to a module that emitted them (e.g. "agent.graph", "rag.retriever")
-        """
-        return _loguru_logger.bind(module=name)
+def get_logger(name: str):
+    """
+    Returns a logger bound with a 'name' field so log lines are traceable
+    to a module that emitted them (e.g. "agent.graph", "rag.retriever")
+    """
+    return _loguru_logger.bind(module=name)
