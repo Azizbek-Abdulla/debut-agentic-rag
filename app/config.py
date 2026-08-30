@@ -32,7 +32,7 @@ class Settings(BaseSettings):
     notion_api_key: str | None = Field(default=None)
     web_search_api_key: str | None = Field(default=None)
 
-    database_url: str = Field(default="sqllite:///./memory.db")
+    database_url: str = Field(default="sqlite:///./memory.db")
 
 
 @lru_cache
@@ -41,4 +41,3 @@ def get_settings() -> Settings:
     return Settings()
 
 settings = get_settings()
-
