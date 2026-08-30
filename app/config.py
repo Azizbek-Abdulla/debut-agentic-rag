@@ -17,7 +17,7 @@ class Settings(BaseSettings):
     llm_temperature: float = Field(default = 0.0)
 
     qdrant_url: str = Field(default = "http://localhost:6333")
-    qdrant_api_key: None = Field(default = None)
+    qdrant_api_key: str | None = Field(default = None)
     qdrant_collection: str = Field(default="rag_documents")
 
     embedding_model: str = Field(default="BAAI/bge-m3")
