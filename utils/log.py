@@ -21,7 +21,7 @@ class InterceptHandler(logging.Handler):
     def emit(self, record: logging.LogRecord) -> None:
         try:
             level = _loguru_logger.level(record.levelname).name
-        except:
+        except ValueError:
             level = record.levelno
         frame, depth = logging.currentframe(), 2
 
