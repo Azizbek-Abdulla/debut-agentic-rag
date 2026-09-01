@@ -18,7 +18,7 @@ class InterceptHandler(logging.Handler):
     Routes stdlib logging records (e.g. from FastAPI, uvicorn, LangChain)
     into loguru so everything end up in one consistent format/sink.
     """
-    def emit(self, record=logging.LogRecord) -> None:
+    def emit(self, record: logging.LogRecord) -> None:
         try:
             level = _loguru_logger.level(record.levelname).name
         except:
