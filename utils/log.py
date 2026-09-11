@@ -50,7 +50,7 @@ def configure_logging(log_dir: str = "logs", level: str = "INFO") -> None:
             "<cyan>{name}</cyan>:<cyan>{function}</cyan>:<cyan>{line}</cyan> - <level>{message}</level>"
         ),
         colorize=True, 
-        backtrace=False, 
+        backtrace=False,
         diagnose=False
         )
 
@@ -68,7 +68,7 @@ def configure_logging(log_dir: str = "logs", level: str = "INFO") -> None:
     logging.basicConfig(
         handlers=[InterceptHandler()], level=0, force=True
     )
-    for noisy_logger in ("uvicorn", "uvicorn.error", "uvicorn.access", "htppx"):
+    for noisy_logger in ("uvicorn", "uvicorn.error", "uvicorn.access", "httpx"):
         logging.getLogger(noisy_logger).handlers = [InterceptHandler()]
 
 def get_logger(name: str):
