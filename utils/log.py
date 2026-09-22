@@ -1,7 +1,7 @@
 """
 Structured logging setup for the agentic RAG application.
 Usage: 
-    from utils.logging import get_logger
+    from utils.log import get_logger
 
     logger = get_logger(__name__)
     logger.info("Retirieval started", query=query, top_k=top_k)
