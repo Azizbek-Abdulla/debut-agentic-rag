@@ -1,3 +1,12 @@
+"""
+Qdrant vector store: collection setup, upserting embedded chunks, and search.
+
+Usage:
+    from database.vector_store import get_qdrant_client, ensure_collection, upsert_chunks
+    client = get_qdrant_client()
+    ensure_collection(client)
+    upsert_chunks(client, chunks, embeddings)
+"""
 import sys
 from pathlib import Path
 
@@ -12,6 +21,10 @@ from utils.log import get_logger
 from loguru import logger
 
 def get_qdrant_client() -> QdrantClient:
+    """
+    Creates a Qdrant client from settings. Call this once and reuse this client 
+    rather than creating a new one per request.
+    """
     logger.info("connecting to Qdrant", url=settings.qdrant_url)
 
     client = QdrantClient(
@@ -22,6 +35,10 @@ def get_qdrant_client() -> QdrantClient:
     return client
 
 def ensure_collection(client: QdrantClient) -> None:
+    """
+    Creates a collection if it doesn't already exist. Safe to call on every app
+    startup -- it is a no-op if the collection is already there.
+    """
     collection_name = settings.qdrant_collection
     existing = [c.name for c in client.get_collections().collections]
 
@@ -48,6 +65,11 @@ def upsert_chunks(
         chunks: list, 
         embeddings: list[list[float]]
 ) -> None:
+    """
+    Writes chunks and their embeddings into Qdrant vector store as points.
+    chunks: list of Chunk objects from rag/chunker.py
+    embeddings: list of vectors, same length and order as chunks.
+    """
     if len(chunks) != len(embeddings):
         logger.error(
             "Chunks/embedding size mismatch occured",
@@ -87,6 +109,10 @@ def search(
     client: QdrantClient, 
     query_vector: list[float],
     top_k: int = 20) -> list[dict]: 
+    """
+    Runs a dense vectors search and returns matches as plain dicts
+    (text, source, page, score) for every downstream use
+    """
     logger.info("Running vector search", top_k=top_k)
 
     results = client.search(
